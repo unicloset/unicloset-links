@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>unicloset — questionário</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGDZTR9K99"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LGDZTR9K99');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -422,6 +429,12 @@
     answerLabels[questionKey] = opt.label;
     opt.tags.forEach(tag => { scores[tag]++; });
     primaryPerAnswer.push(opt.tags[0]);
+    if(typeof gtag === 'function'){
+      gtag('event', 'quiz_question_answered', {
+        question: questionKey,
+        answer: opt.label
+      });
+    }
   }
 
   function askQ1(){
@@ -471,6 +484,12 @@
 
   function showResultDirect(key){
     const r = RESULTS[key];
+
+    if(typeof gtag === 'function'){
+      gtag('event', 'quiz_result', {
+        result: key
+      });
+    }
 
     setTimeout(() => {
       addBotMessage("Prontinho! Com base no que você me contou, aqui está o que combina mais com você:");
